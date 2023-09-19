@@ -1,30 +1,15 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
+# ValidadorFluxograma
 
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
-# NomedoProjeto
-
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Conteúdo da Disciplina**: Grafos 1<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 20/0025449  |  Natan Tavares Santana |
+| 20/0036351  |  Clara Marcelino Ribeiro de Sousa |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+O Validador de Fluxograma é um sistema web que possui o objetivo de avaliar se a grade curricular que o usuário fornecer é válida ou não. Caso haja algum ciclo de pré-requisitos, o sistema irá avisar que o fluxograma não é válido pois há um paradoxo.
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
