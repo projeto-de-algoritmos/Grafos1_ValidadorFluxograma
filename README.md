@@ -11,6 +11,8 @@
 ## Sobre 
 O Validador de Fluxograma é um sistema web que possui o objetivo de avaliar se a grade curricular que o usuário fornecer é válida ou não. Caso haja algum ciclo de pré-requisitos, o sistema irá avisar que o fluxograma não é válido pois há um paradoxo.
 
+O protótipo da aplicação foi realizado pelo Figma e pode ser acessado [aqui](https://www.figma.com/proto/gir2PsBWd8JVqQi1xqW2YH/CurriculumValidator?type=design&node-id=5-3&t=y7xUuQouCkwMrvjU-1&scaling=scale-down&page-id=0%3A1&mode=design).
+
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
 
