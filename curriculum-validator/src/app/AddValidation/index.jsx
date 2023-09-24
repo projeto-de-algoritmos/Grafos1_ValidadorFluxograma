@@ -6,96 +6,104 @@ import {
   Wrapper, Title, ContentContainer, ButtonWithIcon, SelectContainer, InputLabel
 } from './styles';
 import {  Input, Checkbox, Button } from '@chakra-ui/react';
-import { ArrowForwardIcon } from '@chakra-ui/icons'
 
-function AddValidation({show, curriculumName}) {
+function AddValidation({ show, curriculumName }) {
   const [showFields, setShowFields] = useState(true);
+  const [dataName, setDataName] = useState(""); // Estado para o nome da disciplina
+  const [checkboxStates, setCheckboxStates] = useState({}); // Estado para os checkboxes
+  const [data, setData] = useState([]); // Estado para armazenar os dados
 
-  const curriculum = [{
-    name: "Algoritmos e Programação de Computadores",
-    degree: 1,
-  }, {
-    name: "Algoritmos e Programação de Computadores",
-    degree: 1,
-    dependencies: [{
-        name: "OO",
-        index: 1
-    },{
-      name: "Testes",
-      index: 1
-    }]
-  }, {
-    name: "Algoritmos e Programação de Computadores",
-    degree: 1,
-    dependencies: [{
-        name: "OO",
-        index: 1
-    },{
-      name: "Testes",
-      index: 1
-    }]
-    },{
-      name: "Algoritmos e Programação de Computadores",
-      degree: 1,
-      dependencies: [{
-          name: "OO",
-          index: 1
-      }]
-    },{
-      name: "Algoritmos e Programação de Computadores",
-      degree: 1,
-      dependencies: [{
-          name: "OO",
-          index: 1
-      }]
-    },{
-      name: "Algoritmos e Programação de Computadores",
-      degree: 1,
-      dependencies: [{
-          name: "OO",
-          index: 1
-      }]
-    }
-  ]
+  console.log(data);
+
+  const handleInputChange = (e) => {
+    setDataName(e.target.value);
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setCheckboxStates((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }));
+  };
+
+  const handleAddDisciplina = () => {
+    const dependencies = Object.keys(checkboxStates).filter(
+      (key) => checkboxStates[key]
+    );
+
+    const disciplina = {
+      name: dataName,
+      dependencies: dependencies.map((name) => ({ name })),
+    };
+
+    setData((prevData) => [...prevData, disciplina]);
+
+    setDataName("");
+    setCheckboxStates({});
+  };
 
   return (
     <Wrapper show={show}>
-       <Title>{curriculumName || 'Grade curricular'}</Title>
-       <ContentContainer show={!showFields}>
+      <Title>{curriculumName || "Grade curricular"}</Title>
+      <ContentContainer show={!showFields}>
         <ButtonWithIcon>
           Adicionar Disciplina
-          <span><img src={AddIcon} alt="Ícone" /></span>
+          <span>
+            <img src={AddIcon} alt="Ícone" />
+          </span>
         </ButtonWithIcon>
-        {(curriculum.length > 1) && (
+        {data.length > 1 && (
           <ButtonWithIcon>
             Validar Grade
-            <span><img class='listIcon' src={ListItem} alt="Ícone" /></span>
+            <span>
+              <img class="listIcon" src={ListItem} alt="Ícone" />
+            </span>
           </ButtonWithIcon>
         )}
-       </ContentContainer>
-       <ContentContainer show={showFields} addMargin>
-          <InputLabel>Nome da disciplina</InputLabel>
-            <Input
-              required
-              value={curriculumName}  
-              placeholder='Nome'
-              color='#A37774'
-              _placeholder={{ color: '#A37774' }}
-              focusBorderColor='#E88873'
-              variant='filled'
-              size='md'
-            />
-          <InputLabel>Selecionar pré-requisitos</InputLabel>
+      </ContentContainer>
+      <ContentContainer show={showFields} addMargin>
+        <InputLabel>Nome da disciplina</InputLabel>
+        <Input
+          required
+          value={dataName}
+          placeholder="Nome"
+          color="#A37774"
+          _placeholder={{ color: "#A37774" }}
+          focusBorderColor="#E88873"
+          variant="filled"
+          size="md"
+          onChange={handleInputChange}
+        />
+        <InputLabel>Selecionar pré-requisitos</InputLabel>
         <SelectContainer>
           <>
-          {curriculum?.map?.((item, index) => (
-            <Checkbox colorScheme='orange' value={item.name}>{item.name}</Checkbox>
-          ))}
+            {data?.map?.((item, index) => (
+              <Checkbox
+                key={index}
+                colorScheme="orange"
+                name={item.name}
+                checked={!!checkboxStates[item.name]}
+                onChange={handleCheckboxChange}
+              >
+                {item.name}
+              </Checkbox>
+            ))}
           </>
         </SelectContainer>
-        <Button color='#A37774' bg='#EADEDA' border='2px' borderColor='#A37774' width='9rem' size='sm'>Adicionar Disciplina</Button>
-       </ContentContainer>
-        <ClassSubjects curriculum={curriculum}/>
+        <Button
+          color="#A37774"
+          bg="#EADEDA"
+          border="2px"
+          borderColor="#A37774"
+          width="9rem"
+          size="sm"
+          onClick={handleAddDisciplina}
+        >
+          Adicionar Disciplina
+        </Button>
+      </ContentContainer>
+      <ClassSubjects data={data} />
     </Wrapper>
   );
 }

@@ -3,7 +3,7 @@ import Slider from './Slider';
 import { Tooltip } from '@chakra-ui/react'
 import { Wrapper, Title, Card, Subject, Dependencies } from './styles';
 
-function ClassSubjects({curriculum}) {
+function ClassSubjects({data}) {
 
   const settings = {
     dots: false,
@@ -36,7 +36,7 @@ function ClassSubjects({curriculum}) {
     <Wrapper>
       <Title>Disciplinas Criadas</Title>
       <Slider {...settings}>   
-      {curriculum?.map?.((item, index) => ( 
+      {data?.map?.((item, index) => ( 
         <Card>
         <Tooltip placement='top' hasArrow label={item?.name} bg='#252422'>
           <Subject>{renderText(item?.name)}</Subject>
