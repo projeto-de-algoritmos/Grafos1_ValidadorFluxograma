@@ -21,7 +21,8 @@ export const ContentContainer = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   min-height: 15.278rem;
-  margin-bottom: ${(props) => (props.addMargin && '2.389rem')};
+  min-width: ${(props) => (props.addMargin && '44.556rem')};
+  margin-bottom: 2.389rem;
 `;
 
 export const ButtonWithIcon = styled.button`
@@ -55,9 +56,11 @@ export const ButtonWithIcon = styled.button`
 
 export const SelectContainer = styled.div`
   width: 39rem;
-  max-height: 4.333rem;
+  max-height: 3.733rem;
   margin-bottom: 1.222rem;
   overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     overflow-y: auto;

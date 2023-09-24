@@ -50,7 +50,7 @@ export const ValidationContainer = styled.div`
   overflow-x: hidden;
   min-width: 51.278rem;
   min-height: 37.889rem;
-  padding: 3.056rem;
+  padding: 2.056rem 3.056rem;
   display: flex;
   flex-direction: column;
   align-items: center;

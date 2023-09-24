@@ -1,6 +1,6 @@
 import React from 'react';
 import Slick from 'react-slick';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import arrow from '../../../../assets/arrow.svg';
 
 const SlickSlider = styled(Slick)`
@@ -40,15 +40,15 @@ const SlickSlider = styled(Slick)`
       height: 2.666rem;
       position: absolute;
       right: 0;
-      top: 52%;
+      top: 56%;
       width: 2.666rem;
       z-index: 1;
       &.slick-prev {
-        right: 10%;
+        right: 8%;
         transform: rotate(180deg);
       }
       &.slick-next {
-        right: 8%;
+        right: 6%;
       }
       &.slick-disabled {
         cursor: initial;

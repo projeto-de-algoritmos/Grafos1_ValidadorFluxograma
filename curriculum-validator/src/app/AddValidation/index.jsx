@@ -8,12 +8,10 @@ import {
 import {  Input, Checkbox, Button } from '@chakra-ui/react';
 
 function AddValidation({ show, curriculumName }) {
-  const [showFields, setShowFields] = useState(true);
+  const [showFields, setShowFields] = useState(false);
   const [dataName, setDataName] = useState(""); // Estado para o nome da disciplina
   const [checkboxStates, setCheckboxStates] = useState({}); // Estado para os checkboxes
   const [data, setData] = useState([]); // Estado para armazenar os dados
-
-  console.log(data);
 
   const handleInputChange = (e) => {
     setDataName(e.target.value);
@@ -41,19 +39,20 @@ function AddValidation({ show, curriculumName }) {
 
     setDataName("");
     setCheckboxStates({});
+    setShowFields(!showFields);
   };
 
   return (
     <Wrapper show={show}>
       <Title>{curriculumName || "Grade curricular"}</Title>
       <ContentContainer show={!showFields}>
-        <ButtonWithIcon>
+        <ButtonWithIcon onClick={(() => setShowFields(!showFields))}>
           Adicionar Disciplina
           <span>
             <img src={AddIcon} alt="Ícone" />
           </span>
         </ButtonWithIcon>
-        {data.length > 1 && (
+        {data.length >= 1 && (
           <ButtonWithIcon>
             Validar Grade
             <span>
@@ -75,35 +74,39 @@ function AddValidation({ show, curriculumName }) {
           size="md"
           onChange={handleInputChange}
         />
-        <InputLabel>Selecionar pré-requisitos</InputLabel>
-        <SelectContainer>
+        {data.length >= 1 && (
           <>
-            {data?.map?.((item, index) => (
-              <Checkbox
-                key={index}
-                colorScheme="orange"
-                name={item.name}
-                checked={!!checkboxStates[item.name]}
-                onChange={handleCheckboxChange}
-              >
-                {item.name}
-              </Checkbox>
-            ))}
+            <InputLabel>Selecionar pré-requisitos</InputLabel>
+            <SelectContainer>
+              <>
+                {data?.map?.((item, index) => (
+                  <Checkbox
+                    key={index}
+                    colorScheme="orange"
+                    name={item.name}
+                    checked={!!checkboxStates[item.name]}
+                    onChange={handleCheckboxChange}
+                  >
+                    {item.name}
+                  </Checkbox>
+                ))}
+              </>
+            </SelectContainer>
           </>
-        </SelectContainer>
+        )}
         <Button
-          color="#A37774"
-          bg="#EADEDA"
-          border="2px"
-          borderColor="#A37774"
-          width="9rem"
-          size="sm"
-          onClick={handleAddDisciplina}
-        >
-          Adicionar Disciplina
-        </Button>
+              color="#A37774"
+              bg="#EADEDA"
+              border="2px"
+              borderColor="#A37774"
+              width="9rem"
+              size="sm"
+              onClick={dataName ? () => handleAddDisciplina() : null}
+            >
+              Adicionar Disciplina
+            </Button>
       </ContentContainer>
-      <ClassSubjects data={data} />
+      {data.length >= 1 && (<ClassSubjects data={data} />)}
     </Wrapper>
   );
 }

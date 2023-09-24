@@ -6,7 +6,7 @@ import AddValidation from './AddValidation';
 import { useState } from 'react';
 
 function App() {
-  const [showStartValidation, setShowStartValidation] = useState(false);
+  const [showStartValidation, setShowStartValidation] = useState(true);
   const [curriculumName, setCurriculumName] = useState('');
   const [fluxo, setFluxo] = useState([]);
   const [erro, setErro] = useState({
