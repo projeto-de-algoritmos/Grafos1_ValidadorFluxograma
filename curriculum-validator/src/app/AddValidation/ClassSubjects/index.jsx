@@ -1,9 +1,11 @@
 import React from 'react';
 import Slider from './Slider';
 import { Tooltip } from '@chakra-ui/react'
-import { Wrapper, Title, Card, Subject, Dependencies } from './styles';
+import { Wrapper, Title, Card, Subject, Dependencies, ButtonContainer } from './styles';
+import { IconButton } from '@chakra-ui/react';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
-function ClassSubjects({data, editDisciplina, onEditDisciplina}) {
+function ClassSubjects({data, handleExcluirDisciplina, onEditDisciplina}) {
 
   const settings = {
     dots: false,
@@ -41,7 +43,7 @@ function ClassSubjects({data, editDisciplina, onEditDisciplina}) {
         <Tooltip placement='top' hasArrow label={item?.name} bg='#252422'>
           <Subject>{renderText(item?.name)}</Subject>
         </Tooltip>
-        {item.dependencies && (
+        {item?.dependencies?.length > 0 && (
           <>
             <Dependencies>Pré requisitos:</Dependencies>
             {item?.dependencies?.map?.((item) => (
@@ -51,7 +53,10 @@ function ClassSubjects({data, editDisciplina, onEditDisciplina}) {
             ))}
           </>
         )}
-        <button onClick={() => onEditDisciplina(index)}>Editar</button>
+        <ButtonContainer>
+          <IconButton onClick={() => onEditDisciplina(index)} color='#FFFFFF' variant="unstyled" icon={<EditIcon />}/>
+          <IconButton onClick={() => handleExcluirDisciplina(index)} color='#FFFFFF' variant="unstyled" icon={<DeleteIcon />}/>
+        </ButtonContainer>
       </Card>
       
       ))}

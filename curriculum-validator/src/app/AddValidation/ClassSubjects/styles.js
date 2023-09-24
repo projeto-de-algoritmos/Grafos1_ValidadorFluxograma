@@ -57,3 +57,8 @@ export const Dependencies = styled.p`
     font-size: 0.789rem;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

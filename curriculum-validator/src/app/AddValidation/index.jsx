@@ -15,6 +15,7 @@ function AddValidation({ show, curriculumName }) {
   const [editDisciplina, setEditDisciplina] = useState(null); // Estado para a disciplina em edição
   const [editingIndex, setEditingIndex] = useState(null); // Estado para o índice da disciplina em edição
 
+  console.log(data)
 
   const handleInputChange = (e) => {
     setDataName(e.target.value);
@@ -103,6 +104,12 @@ function AddValidation({ show, curriculumName }) {
     setShowFields(!showFields);
   };
 
+  const handleExcluirDisciplina = (index) => {
+    const newData = [...data];
+    newData.splice(index, 1); // Remove a disciplina do array usando o índice
+    setData(newData);
+  };
+
   return (
     <Wrapper show={show}>
       <Title>{curriculumName || "Grade curricular"}</Title>
@@ -183,7 +190,7 @@ function AddValidation({ show, curriculumName }) {
           </Button>
         )}
       </ContentContainer>
-      {data.length >= 1 && (<ClassSubjects data={data} editDisciplina={editDisciplina} onEditDisciplina={handleEditDisciplina} />)}
+      {data.length >= 1 && (<ClassSubjects data={data} handleExcluirDisciplina={handleExcluirDisciplina} onEditDisciplina={handleEditDisciplina} />)}
     </Wrapper>
   );
 }
