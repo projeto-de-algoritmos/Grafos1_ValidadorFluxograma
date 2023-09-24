@@ -32,6 +32,21 @@ export const Button = styled.button`
 export const InputContainer = styled.div`
   width: 22.033rem;
   display: ${(props) => (!props.show ? 'none' : '')};
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  &::-webkit-scrollbar {
+    width: 0.222rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #5c4240;
+    border-radius: 0.111rem;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
 `;
 
 export const InputLabel = styled.p`

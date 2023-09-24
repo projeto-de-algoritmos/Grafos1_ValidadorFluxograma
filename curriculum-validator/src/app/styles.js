@@ -47,8 +47,9 @@ export const ValidationContainer = styled.div`
   background: #EADEDA;
   border-radius: 1.667rem;
   overflow-y: auto;
-  width: 51.278rem;
-  height: 36.333rem;
+  overflow-x: hidden;
+  min-width: 51.278rem;
+  min-height: 37.889rem;
   padding: 3.056rem;
   display: flex;
   flex-direction: column;
@@ -58,7 +59,7 @@ export const ValidationContainer = styled.div`
 export const UnderpageText = styled.p`
   color: #FFFFFF;
   font-size: 16px;
-  font-family: 'Mooli', sans-serif;
+  font-family: 'Amaranth', sans-serif;
   font-weight: 500;
   text-transform: uppercase;
   margin-top: 1.111rem;

@@ -4,10 +4,9 @@ import {
 import Start from './Start/index';
 import AddValidation from './AddValidation';
 import { useState } from 'react';
-import { InputGroup, InputRightElement, Input, Button, AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, IconButton } from '@chakra-ui/react';
 
 function App() {
-  const [showStartValidation, setShowStartValidation] = useState(true);
+  const [showStartValidation, setShowStartValidation] = useState(false);
   const [curriculumName, setCurriculumName] = useState('');
   const [fluxo, setFluxo] = useState([]);
   const [erro, setErro] = useState({
