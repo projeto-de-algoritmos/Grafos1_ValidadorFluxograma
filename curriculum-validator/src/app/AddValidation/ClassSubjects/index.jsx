@@ -3,7 +3,7 @@ import Slider from './Slider';
 import { Tooltip } from '@chakra-ui/react'
 import { Wrapper, Title, Card, Subject, Dependencies } from './styles';
 
-function ClassSubjects({data}) {
+function ClassSubjects({data, editDisciplina, onEditDisciplina}) {
 
   const settings = {
     dots: false,
@@ -51,6 +51,7 @@ function ClassSubjects({data}) {
             ))}
           </>
         )}
+        <button onClick={() => onEditDisciplina(index)}>Editar</button>
       </Card>
       
       ))}

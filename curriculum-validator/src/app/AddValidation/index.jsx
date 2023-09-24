@@ -12,6 +12,9 @@ function AddValidation({ show, curriculumName }) {
   const [dataName, setDataName] = useState(""); // Estado para o nome da disciplina
   const [checkboxStates, setCheckboxStates] = useState({}); // Estado para os checkboxes
   const [data, setData] = useState([]); // Estado para armazenar os dados
+  const [editDisciplina, setEditDisciplina] = useState(null); // Estado para a disciplina em edição
+  const [editingIndex, setEditingIndex] = useState(null); // Estado para o índice da disciplina em edição
+
 
   const handleInputChange = (e) => {
     setDataName(e.target.value);
@@ -25,18 +28,76 @@ function AddValidation({ show, curriculumName }) {
     }));
   };
 
+  const handleEditDisciplina = (index) => {
+    const disciplinaToEdit = data[index];
+    setDataName(disciplinaToEdit.name);
+  
+    // Preencha os checkboxes com os pré-requisitos selecionados
+    const selectedDependencies = {};
+    disciplinaToEdit.dependencies.forEach((dep) => {
+      selectedDependencies[dep.name] = true;
+    });
+    setCheckboxStates(selectedDependencies);
+  
+    setEditDisciplina({ ...disciplinaToEdit });
+    setEditingIndex(index);
+    setShowFields(true);
+  };
+  
   const handleAddDisciplina = () => {
-    const dependencies = Object.keys(checkboxStates).filter(
-      (key) => checkboxStates[key]
-    );
+    if (editDisciplina !== null && editingIndex !== null) {
+      // Atualize a disciplina existente
+      const updatedData = [...data];
+      updatedData[editingIndex] = { ...editDisciplina };
+      setData(updatedData);
+      setEditDisciplina(null);
+      setEditingIndex(null);
+    } else {
+      // Adicione uma nova disciplina
+      const dependencies = Object.keys(checkboxStates).filter(
+        (key) => checkboxStates[key]
+      );
+  
+      const disciplina = {
+        name: dataName,
+        dependencies: dependencies.map((name) => ({ name })),
+      };
+  
+      setData((prevData) => [...prevData, disciplina]);
+    }
+  
+    setDataName("");
+    setCheckboxStates({});
+    setShowFields(!showFields);
+  };
 
-    const disciplina = {
-      name: dataName,
-      dependencies: dependencies.map((name) => ({ name })),
-    };
-
-    setData((prevData) => [...prevData, disciplina]);
-
+  const handleSaveDisciplina = () => {
+    if (editDisciplina !== null && editingIndex !== null) {
+      // Atualize a disciplina existente
+      const updatedData = [...data];
+      updatedData[editingIndex] = {
+        name: dataName,
+        dependencies: Object.keys(checkboxStates).filter(
+          (key) => checkboxStates[key]
+        ).map((name) => ({ name })),
+      };
+      setData(updatedData);
+      setEditDisciplina(null);
+      setEditingIndex(null);
+    } else {
+      // Adicione uma nova disciplina (lógica semelhante à função handleAddDisciplina)
+      const dependencies = Object.keys(checkboxStates).filter(
+        (key) => checkboxStates[key]
+      );
+  
+      const disciplina = {
+        name: dataName,
+        dependencies: dependencies.map((name) => ({ name })),
+      };
+  
+      setData((prevData) => [...prevData, disciplina]);
+    }
+  
     setDataName("");
     setCheckboxStates({});
     setShowFields(!showFields);
@@ -74,39 +135,55 @@ function AddValidation({ show, curriculumName }) {
           size="md"
           onChange={handleInputChange}
         />
-        {data.length >= 1 && (
+        {(data.length >= 1) && (
           <>
-            <InputLabel>Selecionar pré-requisitos</InputLabel>
+            {!editDisciplina && <InputLabel>Selecionar pré-requisitos</InputLabel>}
             <SelectContainer>
-              <>
-                {data?.map?.((item, index) => (
-                  <Checkbox
-                    key={index}
-                    colorScheme="orange"
-                    name={item.name}
-                    checked={!!checkboxStates[item.name]}
-                    onChange={handleCheckboxChange}
-                  >
-                    {item.name}
-                  </Checkbox>
-                ))}
-              </>
+              {data?.map?.((item, index) => (
+                <>
+                  {index !== editingIndex && (
+                    <Checkbox
+                      key={index}
+                      colorScheme="orange"
+                      name={item.name}
+                      checked={!!checkboxStates[item.name]}
+                      onChange={handleCheckboxChange}
+                    >
+                      {item.name}
+                    </Checkbox>
+                  )}
+                </>
+              ))}
             </SelectContainer>
           </>
         )}
-        <Button
-              color="#A37774"
-              bg="#EADEDA"
-              border="2px"
-              borderColor="#A37774"
-              width="9rem"
-              size="sm"
-              onClick={dataName ? () => handleAddDisciplina() : null}
-            >
-              Adicionar Disciplina
-            </Button>
+        {!editDisciplina ? (
+          <Button
+            color="#A37774"
+            bg="#EADEDA"
+            border="2px"
+            borderColor="#A37774"
+            width="9rem"
+            size="sm"
+            onClick={dataName ? () => handleAddDisciplina() : null}
+          >
+            Adicionar Disciplina
+          </Button>
+        ) : (
+          <Button
+            color="#A37774"
+            bg="#EADEDA"
+            border="2px"
+            borderColor="#A37774"
+            width="9rem"
+            size="sm"
+            onClick={() => handleSaveDisciplina()}
+          >
+            Salvar Edição
+          </Button>
+        )}
       </ContentContainer>
-      {data.length >= 1 && (<ClassSubjects data={data} />)}
+      {data.length >= 1 && (<ClassSubjects data={data} editDisciplina={editDisciplina} onEditDisciplina={handleEditDisciplina} />)}
     </Wrapper>
   );
 }
