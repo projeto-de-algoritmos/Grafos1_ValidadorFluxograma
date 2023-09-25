@@ -260,7 +260,10 @@ function AddValidation({ show, curriculumName }) {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button ref={cancelRef} onClick={() => {
+                onClose();
+                window.location.reload();
+              }}>
                 Voltar
               </Button>
             </AlertDialogFooter>
