@@ -156,7 +156,8 @@ function AddValidation({ show, curriculumName }) {
       onOpen();
     } else {
       const componentes = DFS(data);
-      const res = `Seu fluxo possui ${componentes.length} ciclo(s) nos componentes: ${componentes}`
+      const newComponents = componentes.join(" & ");
+      const res = `Seu fluxo possui ${componentes.length} ciclo(s) nos componentes: ${newComponents}`
       setMessage(res);
       onOpen();
     }
