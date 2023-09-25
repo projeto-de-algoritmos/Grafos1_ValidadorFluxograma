@@ -14,7 +14,7 @@ O Validador de Fluxograma é um sistema web que possui o objetivo de avaliar se 
 O protótipo da aplicação foi realizado pelo Figma e pode ser acessado [aqui](https://www.figma.com/proto/gir2PsBWd8JVqQi1xqW2YH/CurriculumValidator?type=design&node-id=5-3&t=y7xUuQouCkwMrvjU-1&scaling=scale-down&page-id=0%3A1&mode=design).
 
 ## Screenshots
-<img src="https://j.gifs.com/r2r0xk.gif"><br/>
+![Plataforma](https://j.gifs.com/r2r0xk.gif)
 <img src="./assets/addDisciplina.png"><br/>
 <img src="./assets/disciplinas.png"><br/>
 <img src="./assets/validacao.png"><br/>
