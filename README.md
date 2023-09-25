@@ -17,9 +17,22 @@ O protótipo da aplicação foi realizado pelo Figma e pode ser acessado [aqui](
 Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Linguagem**: JavaScript<br>
+**Framework**: ReactJs<br>
+
+Passos para rodar o projeto:
+
+1 - entrar na pasta 'curriculum-validator'
+
+```cd curriculum-validator ```
+
+2 - Instalar as dependências
+
+```npm install ```
+
+3 - Rodar aplicação React
+
+```npm run start ```
 
 ## Uso 
 Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
