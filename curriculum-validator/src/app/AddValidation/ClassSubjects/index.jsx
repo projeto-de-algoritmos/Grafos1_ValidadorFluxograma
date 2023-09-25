@@ -46,7 +46,7 @@ function ClassSubjects({data, handleExcluirDisciplina, onEditDisciplina}) {
         </Tooltip>
         {item?.dependenciaDe?.length > 0 && (
           <>
-            <Dependencies>Pré requisitos:</Dependencies>
+            <Dependencies>Pré requisito de:</Dependencies>
             {item?.dependenciaDe?.map?.((item) => (
               <Dependencies className='list' key={item.name}>
                 {item.name}
@@ -55,6 +55,7 @@ function ClassSubjects({data, handleExcluirDisciplina, onEditDisciplina}) {
           </>
         )}
         <ButtonContainer>
+          <IconButton onClick={() => onEditDisciplina(index)} color='#FFFFFF' variant="unstyled" icon={<EditIcon />}/>
         </ButtonContainer>
       </Card>
       

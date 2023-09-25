@@ -1,14 +1,26 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import AddIcon from '../../assets/add-icon.svg'
 import ListItem from '../../assets/list-icon.svg'
 import ClassSubjects from './ClassSubjects';
 import { ordenacaoTopologica } from '../../utils/topological.js';
-import { 
+import { DFS } from '../../utils/ssc.js';
+import {
   Wrapper, Title, ContentContainer, ButtonWithIcon, SelectContainer, InputLabel
 } from './styles';
-import { Input, Checkbox, Button } from '@chakra-ui/react';
+import {
+  Input, Checkbox, Button, AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
 
 function AddValidation({ show, curriculumName }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+  const [message, setMessage] = useState("");
   const [showFields, setShowFields] = useState(false);
   const [dataName, setDataName] = useState("");
   const [checkboxStates, setCheckboxStates] = useState({});
@@ -34,8 +46,11 @@ function AddValidation({ show, curriculumName }) {
 
     // Preencha os checkboxes com os pré-requisitos selecionados
     const selectedDependencies = {};
-    disciplinaToEdit.dependenciaDe.forEach((dep) => {
-      selectedDependencies[dep.name] = true;
+    data.forEach((item) => {
+      const isDependencia = item.dependenciaDe.find((d) => d.name === disciplinaToEdit.name);
+      if (isDependencia) {
+        selectedDependencies[item.name] = true;
+      }
     });
     setCheckboxStates(selectedDependencies);
 
@@ -81,10 +96,7 @@ function AddValidation({ show, curriculumName }) {
       if (index === editingIndex) {
         return {
           name: dataName,
-          dependenciaDe: dependencies.map((name) => {
-            const index = data.findIndex(item => item.name === name);
-            return { name, index };
-          }),
+          dependenciaDe: d.dependenciaDe,
           grau: dependencies.length,
           index: d.index, // Mantém o índice original
         };
@@ -92,12 +104,25 @@ function AddValidation({ show, curriculumName }) {
       return d;
     });
 
+    updatedData.forEach((item) => {
+      if (!dependencies.includes(item.name) && dataName !== item.name) {
+        // Ir no item.dependenciaDe e retirar o objeto com o dataName
+        const removeIndex = item.dependenciaDe.findIndex((obj) => obj.name === dataName);
+        if (removeIndex !== -1) {
+          item.dependenciaDe.splice(removeIndex, 1);
+        }
+      }
+    });
+
     // Atualiza as dependências das disciplinas que têm essa disciplina como pré-requisito
     dependencies.forEach((dependency) => {
       const existingDisciplina = data.find((d) => d.name === dependency);
       if (existingDisciplina) {
         existingDisciplina.dependenciaDe = existingDisciplina.dependenciaDe || [];
-        existingDisciplina.dependenciaDe.push({ name: dataName, index: editingIndex }); // Use o índice original
+        const existingDependency = existingDisciplina.dependenciaDe.find((a) => a.name === dataName);
+        if (!existingDependency) {
+          existingDisciplina.dependenciaDe.push({ name: dataName, index: editingIndex }); // Use o índice original
+        }
       }
     });
 
@@ -106,6 +131,8 @@ function AddValidation({ show, curriculumName }) {
     setDataName("");
     setCheckboxStates({});
     setShowFields(!showFields);
+    setEditingIndex(null);
+    setEditDisciplina(false);
   };
 
   const handleExcluirDisciplina = (index) => {
@@ -122,6 +149,19 @@ function AddValidation({ show, curriculumName }) {
     setData(newData);
   };
 
+  const handleValidarGrade = () => {
+    const resultado = ordenacaoTopologica(data);
+    if (resultado) {
+      setMessage("Seu fluxo é valido!");
+      onOpen();
+    } else {
+      const componentes = DFS(data);
+      const res = `Seu fluxo possui ${componentes.length} ciclo(s) nos componentes: ${componentes}`
+      setMessage(res);
+      onOpen();
+    }
+  }
+
   return (
     <Wrapper show={show}>
       <Title>{curriculumName || "Grade curricular"}</Title>
@@ -133,7 +173,7 @@ function AddValidation({ show, curriculumName }) {
           </span>
         </ButtonWithIcon>
         {data.length >= 1 && (
-          <ButtonWithIcon>
+          <ButtonWithIcon onClick={handleValidarGrade}>
             Validar Grade
             <span>
               <img class="listIcon" src={ListItem} alt="Ícone" />
@@ -203,6 +243,29 @@ function AddValidation({ show, curriculumName }) {
         )}
       </ContentContainer>
       {data.length >= 1 && (<ClassSubjects data={data} handleExcluirDisciplina={handleExcluirDisciplina} onEditDisciplina={handleEditDisciplina} />)}
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Validação de fluxo
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              {message}
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Voltar
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Wrapper>
   );
 }
