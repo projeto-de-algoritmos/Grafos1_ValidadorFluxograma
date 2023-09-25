@@ -44,7 +44,7 @@ const SlickSlider = styled(Slick)`
       width: 2.666rem;
       z-index: 1;
       &.slick-prev {
-        left: 8%;
+        right: 8%;
         transform: rotate(180deg);
       }
       &.slick-next {

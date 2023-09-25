@@ -1,5 +1,5 @@
 import { 
-  Wrapper, ContentWrapper, ValidationContainer, Title, Subtitle, Description, UnderpageText
+  Wrapper, ContentWrapper, ValidationContainer, Title, Subtitle, Description, UnderpageText, Container
 } from './styles';
 import Start from './Start/index';
 import AddValidation from './AddValidation';
@@ -56,13 +56,13 @@ function App() {
   }
 
   return (
-    <Wrapper>
+    <Wrapper> 
         <ContentWrapper>
           <Title>Curriculum<br/><span>Validator</span></Title>
           <Subtitle>Validar Grade Curricular</Subtitle>
           <Description>O Curriculum Validator é uma ferramenta que verifica automaticamente a coerência e consistência dos fluxos de grade escolar, evitando conflitos e facilitando a gestão curricular.</Description>
         </ContentWrapper>
-        <div>
+        <Container>
           <ValidationContainer>
             <Start
               showStartValidation={showStartValidation}
@@ -73,7 +73,7 @@ function App() {
             <AddValidation show={!showStartValidation} curriculumName={curriculumName} />
           </ValidationContainer>
           <UnderpageText>Desenvolvido por Clara Ribeiro e Natan Tavares</UnderpageText>
-        </div>
+        </Container>
     </Wrapper>
   );
 }

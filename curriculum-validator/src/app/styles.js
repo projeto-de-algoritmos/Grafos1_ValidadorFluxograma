@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   padding: 3.056rem 3.056rem 0.667rem;
 `;
 
@@ -44,12 +43,17 @@ export const Description = styled.p`
   text-justify: inter-word;
 `;
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ValidationContainer = styled.div`
   background: #EADEDA;
   border-radius: 1.667rem;
+  min-width: 51.278rem;
   overflow-y: auto;
   overflow-x: hidden;
-  width: 100%;
   min-height: 37.889rem;
   padding: 2.056rem 3.056rem;
   display: flex;
