@@ -165,7 +165,7 @@ function AddValidation({ show, curriculumName }) {
                       key={index}
                       colorScheme="orange"
                       name={item.name}
-                      checked={!!checkboxStates[item.name]}
+                      isChecked={!!checkboxStates[item.name]}
                       onChange={handleCheckboxChange}
                     >
                       {item.name}
