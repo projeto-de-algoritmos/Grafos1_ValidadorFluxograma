@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
+  width: 100%;
   padding: 3.056rem 3.056rem 0.667rem;
 `;
 
@@ -51,7 +52,7 @@ export const Container = styled.div`
 export const ValidationContainer = styled.div`
   background: #EADEDA;
   border-radius: 1.667rem;
-  min-width: 51.278rem;
+  min-width: 45rem;
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 37.889rem;
@@ -59,6 +60,7 @@ export const ValidationContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
 export const UnderpageText = styled.p`
