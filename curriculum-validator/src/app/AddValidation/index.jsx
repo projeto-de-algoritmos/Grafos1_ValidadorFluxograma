@@ -2,20 +2,19 @@ import { useState } from 'react';
 import AddIcon from '../../assets/add-icon.svg'
 import ListItem from '../../assets/list-icon.svg'
 import ClassSubjects from './ClassSubjects';
+import { ordenacaoTopologica } from '../../utils/topological.js';
 import { 
   Wrapper, Title, ContentContainer, ButtonWithIcon, SelectContainer, InputLabel
 } from './styles';
-import {  Input, Checkbox, Button } from '@chakra-ui/react';
+import { Input, Checkbox, Button } from '@chakra-ui/react';
 
 function AddValidation({ show, curriculumName }) {
   const [showFields, setShowFields] = useState(false);
-  const [dataName, setDataName] = useState(""); // Estado para o nome da disciplina
-  const [checkboxStates, setCheckboxStates] = useState({}); // Estado para os checkboxes
-  const [data, setData] = useState([]); // Estado para armazenar os dados
-  const [editDisciplina, setEditDisciplina] = useState(null); // Estado para a disciplina em edição
-  const [editingIndex, setEditingIndex] = useState(null); // Estado para o índice da disciplina em edição
-
-  console.log(data)
+  const [dataName, setDataName] = useState("");
+  const [checkboxStates, setCheckboxStates] = useState({});
+  const [data, setData] = useState([]);
+  const [editDisciplina, setEditDisciplina] = useState(null);
+  const [editingIndex, setEditingIndex] = useState(null);
 
   const handleInputChange = (e) => {
     setDataName(e.target.value);
@@ -32,83 +31,101 @@ function AddValidation({ show, curriculumName }) {
   const handleEditDisciplina = (index) => {
     const disciplinaToEdit = data[index];
     setDataName(disciplinaToEdit.name);
-  
+
     // Preencha os checkboxes com os pré-requisitos selecionados
     const selectedDependencies = {};
-    disciplinaToEdit.dependencies.forEach((dep) => {
+    disciplinaToEdit.dependenciaDe.forEach((dep) => {
       selectedDependencies[dep.name] = true;
     });
     setCheckboxStates(selectedDependencies);
-  
+
     setEditDisciplina({ ...disciplinaToEdit });
     setEditingIndex(index);
     setShowFields(true);
   };
-  
+
   const handleAddDisciplina = () => {
-    if (editDisciplina !== null && editingIndex !== null) {
-      // Atualize a disciplina existente
-      const updatedData = [...data];
-      updatedData[editingIndex] = { ...editDisciplina };
-      setData(updatedData);
-      setEditDisciplina(null);
-      setEditingIndex(null);
-    } else {
-      // Adicione uma nova disciplina
-      const dependencies = Object.keys(checkboxStates).filter(
-        (key) => checkboxStates[key]
-      );
-  
-      const disciplina = {
-        name: dataName,
-        dependencies: dependencies.map((name) => ({ name })),
-      };
-  
-      setData((prevData) => [...prevData, disciplina]);
-    }
-  
+    const dependenciaDe = Object.keys(checkboxStates).filter(
+      (key) => checkboxStates[key]
+    );
+
+    let disciplina = {
+      name: dataName,
+      index: data.length, // Salve o índice da disciplina
+      dependenciaDe: [],
+      grau: 0,
+    };
+
+    // Atualiza as dependências das disciplinas que têm essa disciplina como pré-requisito
+    dependenciaDe.forEach((dependency) => {
+      const existingDisciplina = data.find((d) => d.name === dependency);
+      if (existingDisciplina) {
+        existingDisciplina.dependenciaDe = existingDisciplina.dependenciaDe || [];
+        existingDisciplina.dependenciaDe.push({ name: dataName, index: disciplina.index }); // Adicione o índice da disciplina
+        existingDisciplina.grau++; // Aumenta o grau em 1
+      }
+    });
+
+    setData((prevData) => [...prevData, disciplina]);
+
     setDataName("");
     setCheckboxStates({});
     setShowFields(!showFields);
   };
 
   const handleSaveDisciplina = () => {
-    if (editDisciplina !== null && editingIndex !== null) {
-      // Atualize a disciplina existente
-      const updatedData = [...data];
-      updatedData[editingIndex] = {
-        name: dataName,
-        dependencies: Object.keys(checkboxStates).filter(
-          (key) => checkboxStates[key]
-        ).map((name) => ({ name })),
-      };
-      setData(updatedData);
-      setEditDisciplina(null);
-      setEditingIndex(null);
-    } else {
-      // Adicione uma nova disciplina (lógica semelhante à função handleAddDisciplina)
-      const dependencies = Object.keys(checkboxStates).filter(
-        (key) => checkboxStates[key]
-      );
-  
-      const disciplina = {
-        name: dataName,
-        dependencies: dependencies.map((name) => ({ name })),
-      };
-  
-      setData((prevData) => [...prevData, disciplina]);
-    }
-  
+    const dependencies = Object.keys(checkboxStates).filter(
+      (key) => checkboxStates[key]
+    );
+
+    const updatedData = data.map((d, index) => {
+      if (index === editingIndex) {
+        return {
+          name: dataName,
+          dependenciaDe: dependencies.map((name) => {
+            const index = data.findIndex(item => item.name === name);
+            return { name, index };
+          }),
+          grau: d.grau,
+          index: d.index, // Mantém o índice original
+        };
+      }
+      return d;
+    });
+
+    // Atualiza as dependências das disciplinas que têm essa disciplina como pré-requisito
+    dependencies.forEach((dependency) => {
+      const existingDisciplina = data.find((d) => d.name === dependency);
+      if (existingDisciplina) {
+        existingDisciplina.dependenciaDe = existingDisciplina.dependenciaDe || [];
+        existingDisciplina.dependenciaDe.push({ name: dataName, index: editingIndex }); // Use o índice original
+        existingDisciplina.grau++; // Aumenta o grau em 1
+      }
+    });
+
+    setData(updatedData);
+
     setDataName("");
     setCheckboxStates({});
     setShowFields(!showFields);
   };
 
   const handleExcluirDisciplina = (index) => {
-    const newData = [...data];
-    newData.splice(index, 1); // Remove a disciplina do array usando o índice
+    const disciplinaToDelete = data[index];
+
+    // Remove a disciplina das dependências de outras disciplinas
+    data.forEach((d) => {
+      if (d.dependenciaDe) {
+        d.dependenciaDe = d.dependenciaDe.filter((dep) => dep.name !== disciplinaToDelete.name);
+      }
+    });
+
+    const newData = data.filter((_, i) => i !== index);
     setData(newData);
   };
+
+  console.log(data);
+  console.log(ordenacaoTopologica(data));
 
   return (
     <Wrapper show={show}>
