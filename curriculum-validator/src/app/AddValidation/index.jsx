@@ -152,16 +152,16 @@ function AddValidation({ show, curriculumName }) {
   const handleValidarGrade = () => {
     const resultado = ordenacaoTopologica(data);
     if (resultado) {
-      setMessage("Seu fluxo é valido!");
-      onOpen();
+      setMessage("Seu fluxo é válido!");
     } else {
       const componentes = DFS(data);
       const newComponents = componentes.join(" & ");
-      const res = `Seu fluxo possui ${componentes.length} ciclo(s) nos componentes: ${newComponents}`
+      const res = `Seu fluxo é inválido! Foram encontrados ${componentes.length} ciclo(s) nos componentes: ${newComponents}`;
       setMessage(res);
-      onOpen();
     }
+    onOpen();
   }
+  
 
   return (
     <Wrapper show={show}>
@@ -183,11 +183,11 @@ function AddValidation({ show, curriculumName }) {
         )}
       </ContentContainer>
       <ContentContainer show={showFields} addMargin>
-        <InputLabel>name da disciplina</InputLabel>
+        <InputLabel>Nome da disciplina</InputLabel>
         <Input
           required
           value={dataName}
-          placeholder="name"
+          placeholder="Nome"
           color="#A37774"
           _placeholder={{ color: "#A37774" }}
           focusBorderColor="#E88873"

@@ -16,7 +16,7 @@ export const Title = styled.p`
 `;
 
 export const Card = styled.div`
-  height: 8.922rem;
+  height: 10.922rem;
   width: 21.556rem;
   background-color: #A37774;
   border-radius: 0.444rem;

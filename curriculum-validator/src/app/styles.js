@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   max-width: 25.289rem;
+  margin-right: 3.889rem;
 `;
 
 export const Title = styled.h1`
@@ -48,7 +49,7 @@ export const ValidationContainer = styled.div`
   border-radius: 1.667rem;
   overflow-y: auto;
   overflow-x: hidden;
-  min-width: 51.278rem;
+  width: 100%;
   min-height: 37.889rem;
   padding: 2.056rem 3.056rem;
   display: flex;

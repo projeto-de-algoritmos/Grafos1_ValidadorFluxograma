@@ -7,7 +7,6 @@ import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 function ClassSubjects({data, handleExcluirDisciplina, onEditDisciplina}) {
 
-  console.log(data);
   const settings = {
     dots: false,
     infinite: false,
