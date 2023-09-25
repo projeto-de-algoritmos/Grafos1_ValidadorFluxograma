@@ -1,84 +1,84 @@
 const fluxoValido = [{
-    nome: "APC",
+    name: "APC",
     grau: 0,
     dependenciaDe: [{
-        nome: "OO",
+        name: "OO",
         index: 1
     }]
 },{
-    nome: "OO",
+    name: "OO",
     grau: 1,
     dependenciaDe: [{
-        nome: "MDS",
+        name: "MDS",
         index: 2
     }]
 },{
-    nome: "MDS",
+    name: "MDS",
     grau: 1,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     }]
 },{
-    nome: "PP",
+    name: "PP",
     grau: 0,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     }]
 },{
-    nome: "TESTES",
+    name: "TESTES",
     grau: 0,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     }]
 },{
-    nome: "EPS",
+    name: "EPS",
     grau: 3,
     dependenciaDe: []
 }];
 
 const fluxoInvalido = [{
-    nome: "APC",
+    name: "APC",
     grau: 1,
     dependenciaDe: [{
-        nome: "OO",
+        name: "OO",
         index: 1
     }]
 },{
-    nome: "OO",
+    name: "OO",
     grau: 1,
     dependenciaDe: [{
-        nome: "MDS",
+        name: "MDS",
         index: 2
     }]
 },{
-    nome: "MDS",
+    name: "MDS",
     grau: 1,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     },{
-        nome: "APC",
+        name: "APC",
         index: 0
     }]
 },{
-    nome: "PP",
+    name: "PP",
     grau: 0,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     }]
 },{
-    nome: "TESTES",
+    name: "TESTES",
     grau: 0,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     }]
 },{
-    nome: "EPS",
+    name: "EPS",
     grau: 3,
     dependenciaDe: []
 }];

@@ -16,7 +16,7 @@ function Start ({showStartValidation, setShowStartValidation, curriculumName, se
         <span class="icone"><img src={ButtonArrowDown} alt="Ícone" /></span>
       </Button>
       <InputContainer show={showInput}>
-        <InputLabel>Dê um nome para sua grade curricular:</InputLabel>
+        <InputLabel>Dê um name para sua grade curricular:</InputLabel>
         <InputGroup>
           <Input
             required

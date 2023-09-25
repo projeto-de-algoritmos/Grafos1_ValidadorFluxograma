@@ -7,6 +7,7 @@ import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 function ClassSubjects({data, handleExcluirDisciplina, onEditDisciplina}) {
 
+  console.log(data);
   const settings = {
     dots: false,
     infinite: false,
@@ -43,10 +44,10 @@ function ClassSubjects({data, handleExcluirDisciplina, onEditDisciplina}) {
         <Tooltip placement='top' hasArrow label={item?.name} bg='#252422'>
           <Subject>{renderText(item?.name)}</Subject>
         </Tooltip>
-        {item?.dependencies?.length > 0 && (
+        {item?.dependenciaDe?.length > 0 && (
           <>
             <Dependencies>Pré requisitos:</Dependencies>
-            {item?.dependencies?.map?.((item) => (
+            {item?.dependenciaDe?.map?.((item) => (
               <Dependencies className='list' key={item.name}>
                 {item.name}
               </Dependencies>
@@ -54,8 +55,6 @@ function ClassSubjects({data, handleExcluirDisciplina, onEditDisciplina}) {
           </>
         )}
         <ButtonContainer>
-          <IconButton onClick={() => onEditDisciplina(index)} color='#FFFFFF' variant="unstyled" icon={<EditIcon />}/>
-          <IconButton onClick={() => handleExcluirDisciplina(index)} color='#FFFFFF' variant="unstyled" icon={<DeleteIcon />}/>
         </ButtonContainer>
       </Card>
       

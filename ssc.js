@@ -1,46 +1,46 @@
 const fluxoInvalido = [{
-    nome: "APC",
+    name: "APC",
     grau: 1,
     dependenciaDe: [{
-        nome: "OO",
+        name: "OO",
         index: 1
     }]
 },{
-    nome: "OO",
+    name: "OO",
     grau: 1,
     dependenciaDe: [{
-        nome: "MDS",
+        name: "MDS",
         index: 2
     }]
 },{
-    nome: "MDS",
+    name: "MDS",
     grau: 1,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     },{
-        nome: "APC",
+        name: "APC",
         index: 0
     }]
 },{
-    nome: "PP",
+    name: "PP",
     grau: 0,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     }]
 },{
-    nome: "TESTES",
+    name: "TESTES",
     grau: 1,
     dependenciaDe: [{
-        nome: "EPS",
+        name: "EPS",
         index: 5
     }]
 },{
-    nome: "EPS",
+    name: "EPS",
     grau: 3,
     dependenciaDe: [{
-      nome: "TESTES",
+      name: "TESTES",
       index: 4
   }]
 }];
@@ -76,7 +76,7 @@ function DFS_Visit(grafo, v) {
 }
 
 function DFS_componente(grafoReverso, v, grafo, pos, componenteArray) {
-  componenteArray.push(v.nome);
+  componenteArray.push(v.name);
   grafo[pos].deletado = true;
   grafo[pos].post = -1;
 
@@ -96,7 +96,7 @@ function capturarCiclos(grafo) {
 
   for (let i = 0; i < tamGrafo ; i++) {
     const novoVertice = {
-      nome: grafo[i].nome,
+      name: grafo[i].name,
       dependenciaDe: []
     }
 
@@ -109,7 +109,7 @@ function capturarCiclos(grafo) {
     for (let j = 0; j < tamVizinhos; j++) {
       const vizinho = grafo[i].dependenciaDe[j];
       grafoReverso[vizinho.index].dependenciaDe.push({
-        nome: grafo[i].nome,
+        name: grafo[i].name,
         index: i,
         post: grafo[i].post
       });

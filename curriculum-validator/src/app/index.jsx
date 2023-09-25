@@ -14,12 +14,12 @@ function App() {
     message: ""
   });
 
-  const addMateria = (array, nome, grau) => {
-    const existeMateria = array.find(item => item.nome === nome);
+  const addMateria = (array, name, grau) => {
+    const existeMateria = array.find(item => item.name === name);
 
     if (!existeMateria) {
       array.push({
-        nome,
+        name,
         grau,
         dependenciaDe: []
       });
@@ -32,11 +32,11 @@ function App() {
     }
   }
 
-  const addRequisito = (array, nomeMateriaPai, nomeMateriaFilho) => {
+  const addRequisito = (array, nameMateriaPai, nameMateriaFilho) => {
     let indexMateriaPai;
     // Aumenta grau da materia com requisito
     array.forEach((item, index) => {
-      if (item.nome === nomeMateriaPai) {
+      if (item.name === nameMateriaPai) {
         item.grau++;
         indexMateriaPai = index;
       }
@@ -44,9 +44,9 @@ function App() {
 
     // Adiciona no requisito a materia em dependenciaDe
     array.forEach((item) => {
-      if (item.nome === nomeMateriaFilho) {
+      if (item.name === nameMateriaFilho) {
         item.dependenciaDe.push({
-          nome: nomeMateriaPai,
+          name: nameMateriaPai,
           index: indexMateriaPai
         })
       }

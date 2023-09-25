@@ -17,7 +17,7 @@ function DFS_Visit(grafo, v) {
 }
 
 function DFS_componente(grafoReverso, v, grafo, pos, componenteArray) {
-    componenteArray.push(v.nome);
+    componenteArray.push(v.name);
     grafo[pos].deletado = true;
     grafo[pos].post = -1;
 
@@ -37,7 +37,7 @@ function capturarCiclos(grafo) {
 
     for (let i = 0; i < tamGrafo; i++) {
         const novoVertice = {
-            nome: grafo[i].nome,
+            name: grafo[i].name,
             dependenciaDe: []
         }
 
@@ -50,7 +50,7 @@ function capturarCiclos(grafo) {
         for (let j = 0; j < tamVizinhos; j++) {
             const vizinho = grafo[i].dependenciaDe[j];
             grafoReverso[vizinho.index].dependenciaDe.push({
-                nome: grafo[i].nome,
+                name: grafo[i].name,
                 index: i,
                 post: grafo[i].post
             });

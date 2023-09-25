@@ -53,7 +53,7 @@ function AddValidation({ show, curriculumName }) {
       name: dataName,
       index: data.length, // Salve o índice da disciplina
       dependenciaDe: [],
-      grau: 0,
+      grau: dependenciaDe.length,
     };
 
     // Atualiza as dependências das disciplinas que têm essa disciplina como pré-requisito
@@ -62,7 +62,6 @@ function AddValidation({ show, curriculumName }) {
       if (existingDisciplina) {
         existingDisciplina.dependenciaDe = existingDisciplina.dependenciaDe || [];
         existingDisciplina.dependenciaDe.push({ name: dataName, index: disciplina.index }); // Adicione o índice da disciplina
-        existingDisciplina.grau++; // Aumenta o grau em 1
       }
     });
 
@@ -86,7 +85,7 @@ function AddValidation({ show, curriculumName }) {
             const index = data.findIndex(item => item.name === name);
             return { name, index };
           }),
-          grau: d.grau,
+          grau: dependencies.length,
           index: d.index, // Mantém o índice original
         };
       }
@@ -99,7 +98,6 @@ function AddValidation({ show, curriculumName }) {
       if (existingDisciplina) {
         existingDisciplina.dependenciaDe = existingDisciplina.dependenciaDe || [];
         existingDisciplina.dependenciaDe.push({ name: dataName, index: editingIndex }); // Use o índice original
-        existingDisciplina.grau++; // Aumenta o grau em 1
       }
     });
 
@@ -124,9 +122,6 @@ function AddValidation({ show, curriculumName }) {
     setData(newData);
   };
 
-  console.log(data);
-  console.log(ordenacaoTopologica(data));
-
   return (
     <Wrapper show={show}>
       <Title>{curriculumName || "Grade curricular"}</Title>
@@ -147,11 +142,11 @@ function AddValidation({ show, curriculumName }) {
         )}
       </ContentContainer>
       <ContentContainer show={showFields} addMargin>
-        <InputLabel>Nome da disciplina</InputLabel>
+        <InputLabel>name da disciplina</InputLabel>
         <Input
           required
           value={dataName}
-          placeholder="Nome"
+          placeholder="name"
           color="#A37774"
           _placeholder={{ color: "#A37774" }}
           focusBorderColor="#E88873"
