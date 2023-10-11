@@ -15,7 +15,11 @@ Mais detalhes do funcionamento do projeto e dos algoritmos aplicados foram expli
 
 O Arquivo do vídeo também se encontra disponível nesse repositório:
 
-[video](./apresentacao.mp4)
+
+
+https://github.com/projeto-de-algoritmos/Grafos1_ValidadorFluxograma/assets/64803935/57a72f4c-db4a-4d98-83f9-dfaa3b0b33b1
+
+
 
 O protótipo da aplicação foi realizado pelo Figma e pode ser acessado [aqui](https://www.figma.com/proto/gir2PsBWd8JVqQi1xqW2YH/CurriculumValidator?type=design&node-id=5-3&t=y7xUuQouCkwMrvjU-1&scaling=scale-down&page-id=0%3A1&mode=design).
 
